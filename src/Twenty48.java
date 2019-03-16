@@ -19,6 +19,20 @@ public class Twenty48 {
         this.board.add(Arrays.asList(0,0,0,0,0));
     }
 
+    private static void updateNumbers(List<Integer> row) {
+        for (int i = 0; i < row.size() - 1; i++)
+            for (int j = i + 1; j < row.size(); j++) {
+                if (row.get(i).equals(0)) {
+                    row.set(i, row.get(j));
+                    row.set(j, 0);
+                }
+                if (row.get(i).equals(row.get(j))) {
+                    row.set(i, row.get(i) * 2);
+                    row.set(j, 0);
+                }
+            }
+    }
+
     public void printBoard() {
         this.board.forEach(row -> {
             row.forEach(element -> System.out.print(String.format("     %s", element)));
@@ -56,21 +70,19 @@ public class Twenty48 {
         });
     }
 
-    public void moveLeft() {
-        this.board.forEach(row -> {
-            for (int i = 0; i < row.size() - 1; i++) {
-                for (int j = i + 1; j < row.size(); j++) {
-                    if (row.get(i).equals(0)) {
-                        row.set(i, row.get(j));
-                        row.set(j, 0);
-                    }
-                    if (row.get(i).equals(row.get(j))) {
-                        row.set(i, row.get(i) * 2);
-                        row.set(j, 0);
-                    }
-                }
+    private void transpose() {
+        for (int i = 0; i < this.board.size(); i++)
+            for (int j = i + 1; j < this.board.size(); j++) {
+                int temp = this.board.get(i).get(j);
+                int temp2 = this.board.get(j).get(i);
+
+                this.board.get(j).set(i, temp);
+                this.board.get(i).set(j, temp2);
             }
-        });
+    }
+
+    public void moveLeft() {
+        this.board.forEach(Twenty48::updateNumbers);
     }
 
     public void moveRight() {
@@ -81,17 +93,6 @@ public class Twenty48 {
         this.board.forEach(Collections::reverse);
     }
 
-    private void transpose() {
-        for (int i = 0; i < this.board.size(); i++) {
-            for (int j = i + 1; j < this.board.size(); j++) {
-                int temp = this.board.get(i).get(j);
-                int temp2 = this.board.get(j).get(i);
-
-                this.board.get(j).set(i, temp);
-                this.board.get(i).set(j, temp2);
-            }
-        }
-    }
 
     public void moveUp() {
         this.transpose();
