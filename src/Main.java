@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Twenty48 twenty48 = new Twenty48(5);
-        twenty48.initBoard();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
