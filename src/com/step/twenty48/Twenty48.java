@@ -1,3 +1,5 @@
+package com.step.twenty48;
+
 import java.util.*;
 
 public class Twenty48 {
