@@ -1,0 +1,131 @@
+import java.util.*;
+
+public class Twenty48 {
+    private List<List<Integer>> board;
+    private List<Integer> availablePoints;
+
+    public Twenty48() {
+        this.board = new ArrayList<>();
+        this.availablePoints = new ArrayList<>(Arrays.asList(2));
+    }
+
+    public void initBoard() {
+        board.add(Arrays.asList(0, 0, 0));
+        board.add(Arrays.asList(0, 0, 0));
+        board.add(Arrays.asList(0, 0, 0));
+    }
+
+    public void printBoard() {
+        this.board.forEach(row -> {
+            row.forEach(element -> System.out.print(String.format("     %s", element)));
+            System.out.println("\n\n");
+        });
+    }
+
+    public List<Integer> getNewBoardNumbers() {
+        Integer firstRandom = this.availablePoints.get((int) (Math.random() * this.availablePoints.size()));
+        Integer secondRandom = this.availablePoints.get((int) (Math.random() * this.availablePoints.size()));
+        Integer thirdRandom = this.availablePoints.get((int) (Math.random() * this.availablePoints.size()));
+        return new ArrayList<>(Arrays.asList(firstRandom, secondRandom, thirdRandom));
+    }
+
+    public List<List<Integer>> getPlacesToPutNewNumbers() {
+        List<List<Integer>> places = new ArrayList<>();
+        int row = (int) (Math.random() * 3);
+        int column = (int) (Math.random() * 3);
+        while (places.size() != 3) {
+            if (this.board.get(row).get(column) == 0) {
+                places.add(Arrays.asList(row, column));
+            }
+            row = (int) (Math.random() * 3);
+            column = (int) (Math.random() * 3);
+        }
+        return places;
+    }
+
+    public void updateBoard() {
+        List<Integer> boardNumbers = getNewBoardNumbers();
+        List<List<Integer>> places = getPlacesToPutNewNumbers();
+        places.forEach(coordinates -> {
+            this.board.get(coordinates.get(0)).set(coordinates.get(1), boardNumbers.get(0));
+            boardNumbers.remove(0);
+        });
+    }
+
+//    private void addSameNumbers() {
+//        for (int i = 0; i < this.board.size(); i++) {
+//            boolean isAlreadyAdded = false;
+//            for (int j = this.board.size() - 1; j > 0; j--) {
+//                if (this.board.get(i).get(j).equals(this.board.get(i).get(j - 1)) && !isAlreadyAdded) {
+//                    this.board.get(i).set(j - 1, this.board.get(i).get(j) * 2);
+//                    this.board.get(i).set(j, 0);
+//                    isAlreadyAdded = true;
+//                    continue;
+//                }
+//                isAlreadyAdded = false;
+//            }
+//        }
+//    }
+//
+//    private void rotate(){
+//        for (int i = 0; i < this.board.size(); i++) {
+//            for (int j = 0; j < this.board.size()-1; j++) {
+//                if(this.board.get(i).get(j).equals(0)){
+//                    this.board.get(i).set(j,this.board.get(i).get(j+1));
+//                    this.board.get(i).set(j+1, 0);
+//                }
+//            }
+//        }
+//    }
+
+    public void moveLeft() {
+//        addSameNumbers();
+//        rotate();
+        this.board.forEach(row -> {
+            for (int i = 0; i < row.size() - 1; i++) {
+                for (int j = i + 1; j < row.size(); j++) {
+                    if (row.get(i).equals(0)) {
+                        row.set(i, row.get(j));
+                        row.set(j, 0);
+                    }
+                    if (row.get(i).equals(row.get(j))) {
+                        row.set(i, row.get(i) * 2);
+                        row.set(j, 0);
+                    }
+                }
+            }
+        });
+    }
+
+    public void moveRight() {
+        Collections.reverse(this.board);
+        this.board.forEach(Collections::reverse);
+        this.moveLeft();
+        Collections.reverse(this.board);
+        this.board.forEach(Collections::reverse);
+    }
+
+    private void transpose() {
+        for (int i = 0; i < this.board.size(); i++) {
+            for (int j = i + 1; j < this.board.size(); j++) {
+                int temp = this.board.get(i).get(j);
+                int temp2 = this.board.get(j).get(i);
+
+                this.board.get(j).set(i, temp);
+                this.board.get(i).set(j, temp2);
+            }
+        }
+    }
+
+    public void moveUp() {
+        this.transpose();
+        this.moveLeft();
+        this.transpose();
+    }
+
+    public void moveDown() {
+        this.transpose();
+        this.moveRight();
+        this.transpose();
+    }
+}
