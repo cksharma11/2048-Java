@@ -13,11 +13,13 @@ public class Twenty48 {
     }
 
     public void initBoard() {
-        this.board.add(Arrays.asList(0,0,0,0,0));
-        this.board.add(Arrays.asList(0,0,0,0,0));
-        this.board.add(Arrays.asList(0,0,0,0,0));
-        this.board.add(Arrays.asList(0,0,0,0,0));
-        this.board.add(Arrays.asList(0,0,0,0,0));
+        for (int rowIndex = 0; rowIndex < boardSize; rowIndex++) {
+            List<Integer> row = new ArrayList<>();
+            for (int colIndex = 0; colIndex < boardSize; colIndex++) {
+                row.add(0);
+            }
+            this.board.add(row);
+        }
     }
 
     private static void updateCellNumberAndPosition(List<Integer> row) {
