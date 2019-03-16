@@ -44,24 +44,31 @@ public class Twenty48 {
     }
 
     public List<Integer> getNewCellNumbers() {
-        Integer firstRandom = this.availablePoints.get((int) (Math.random() * this.availablePoints.size()));
-        Integer secondRandom = this.availablePoints.get((int) (Math.random() * this.availablePoints.size()));
-        Integer thirdRandom = this.availablePoints.get((int) (Math.random() * this.availablePoints.size()));
+        Integer firstRandom = this.availablePoints.get(getRandom(this.availablePoints.size()));
+        Integer secondRandom = this.availablePoints.get(getRandom(this.availablePoints.size()));
+        Integer thirdRandom = this.availablePoints.get(getRandom(this.availablePoints.size()));
         return new ArrayList<>(Arrays.asList(firstRandom, secondRandom, thirdRandom));
     }
 
+    public int getRandom(int upperLimit){
+        return (int) (Math.random() * upperLimit);
+    }
+
     public List<List<Integer>> getNewCellPositions() {
-        List<List<Integer>> places = new ArrayList<>();
-        int row = (int) (Math.random() * boardSize);
-        int column = (int) (Math.random() * boardSize);
-        while (places.size() != 3) {
-            if (this.board.get(row).get(column) == 0) {
-                places.add(Arrays.asList(row, column));
+        List<List<Integer>> positions = new ArrayList<>();
+        int row = getRandom(boardSize);
+        int column = getRandom(boardSize);
+        int numberOfNewCells = 3;
+
+        while (positions.size() != numberOfNewCells) {
+            boolean isCellEmpty = this.board.get(row).get(column).equals(0);
+            if (isCellEmpty) {
+                positions.add(Arrays.asList(row, column));
             }
-            row = (int) (Math.random() * boardSize);
-            column = (int) (Math.random() * boardSize);
+            row = getRandom(boardSize);
+            column = getRandom(boardSize);
         }
-        return places;
+        return positions;
     }
 
     public void updateBoard() {
@@ -76,11 +83,11 @@ public class Twenty48 {
     private void transpose() {
         for (int rowIndex = 0; rowIndex < this.board.size(); rowIndex++)
             for (int colIndex = rowIndex + 1; colIndex < this.board.size(); colIndex++) {
-                int temp = this.board.get(rowIndex).get(colIndex);
-                int temp2 = this.board.get(colIndex).get(rowIndex);
+                int previous = this.board.get(rowIndex).get(colIndex);
+                int next = this.board.get(colIndex).get(rowIndex);
 
-                this.board.get(colIndex).set(rowIndex, temp);
-                this.board.get(rowIndex).set(colIndex, temp2);
+                this.board.get(colIndex).set(rowIndex, previous);
+                this.board.get(rowIndex).set(colIndex, next);
             }
     }
 
