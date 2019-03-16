@@ -52,35 +52,7 @@ public class Twenty48 {
         });
     }
 
-//    private void addSameNumbers() {
-//        for (int i = 0; i < this.board.size(); i++) {
-//            boolean isAlreadyAdded = false;
-//            for (int j = this.board.size() - 1; j > 0; j--) {
-//                if (this.board.get(i).get(j).equals(this.board.get(i).get(j - 1)) && !isAlreadyAdded) {
-//                    this.board.get(i).set(j - 1, this.board.get(i).get(j) * 2);
-//                    this.board.get(i).set(j, 0);
-//                    isAlreadyAdded = true;
-//                    continue;
-//                }
-//                isAlreadyAdded = false;
-//            }
-//        }
-//    }
-//
-//    private void rotate(){
-//        for (int i = 0; i < this.board.size(); i++) {
-//            for (int j = 0; j < this.board.size()-1; j++) {
-//                if(this.board.get(i).get(j).equals(0)){
-//                    this.board.get(i).set(j,this.board.get(i).get(j+1));
-//                    this.board.get(i).set(j+1, 0);
-//                }
-//            }
-//        }
-//    }
-
     public void moveLeft() {
-//        addSameNumbers();
-//        rotate();
         this.board.forEach(row -> {
             for (int i = 0; i < row.size() - 1; i++) {
                 for (int j = i + 1; j < row.size(); j++) {
