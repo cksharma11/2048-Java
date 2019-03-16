@@ -3,16 +3,20 @@ import java.util.*;
 public class Twenty48 {
     private List<List<Integer>> board;
     private List<Integer> availablePoints;
+    private int boardSize;
 
-    public Twenty48() {
-        this.board = new ArrayList<>();
+    public Twenty48(int boardSize) {
+        this.board = new ArrayList<>(boardSize);
         this.availablePoints = new ArrayList<>(Arrays.asList(2));
+        this.boardSize = boardSize;
     }
 
     public void initBoard() {
-        board.add(Arrays.asList(0, 0, 0));
-        board.add(Arrays.asList(0, 0, 0));
-        board.add(Arrays.asList(0, 0, 0));
+        this.board.add(Arrays.asList(0,0,0,0,0));
+        this.board.add(Arrays.asList(0,0,0,0,0));
+        this.board.add(Arrays.asList(0,0,0,0,0));
+        this.board.add(Arrays.asList(0,0,0,0,0));
+        this.board.add(Arrays.asList(0,0,0,0,0));
     }
 
     public void printBoard() {
@@ -31,14 +35,14 @@ public class Twenty48 {
 
     public List<List<Integer>> getPlacesToPutNewNumbers() {
         List<List<Integer>> places = new ArrayList<>();
-        int row = (int) (Math.random() * 3);
-        int column = (int) (Math.random() * 3);
+        int row = (int) (Math.random() * boardSize);
+        int column = (int) (Math.random() * boardSize);
         while (places.size() != 3) {
             if (this.board.get(row).get(column) == 0) {
                 places.add(Arrays.asList(row, column));
             }
-            row = (int) (Math.random() * 3);
-            column = (int) (Math.random() * 3);
+            row = (int) (Math.random() * boardSize);
+            column = (int) (Math.random() * boardSize);
         }
         return places;
     }

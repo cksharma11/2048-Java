@@ -2,12 +2,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Twenty48 twenty48 = new Twenty48();
+        Twenty48 twenty48 = new Twenty48(5);
         twenty48.initBoard();
         Scanner scanner = new Scanner(System.in);
-        while (true){
+
+        while (true) {
             String move = scanner.nextLine();
-            switch (move){
+            switch (move) {
                 case "w":
                     twenty48.moveUp();
                     twenty48.updateBoard();
@@ -29,9 +30,9 @@ public class Main {
                     twenty48.printBoard();
                     break;
 
-                    default:
-                        System.out.println("Enter correct move");
-                        break;
+                default:
+                    System.out.println("Enter correct move");
+                    break;
             }
         }
     }
