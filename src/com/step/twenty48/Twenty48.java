@@ -4,12 +4,10 @@ import java.util.*;
 
 public class Twenty48 {
     private List<List<Integer>> board;
-    private List<Integer> availablePoints;
     private int boardSize;
 
     public Twenty48(int boardSize) {
         this.board = new ArrayList<>(boardSize);
-        this.availablePoints = new ArrayList<>(Arrays.asList(2));
         this.boardSize = boardSize;
         this.initBoard();
     }
@@ -45,13 +43,6 @@ public class Twenty48 {
         });
     }
 
-    public List<Integer> getNewCellNumbers() {
-        Integer firstRandom = this.availablePoints.get(getRandom(this.availablePoints.size()));
-        Integer secondRandom = this.availablePoints.get(getRandom(this.availablePoints.size()));
-        Integer thirdRandom = this.availablePoints.get(getRandom(this.availablePoints.size()));
-        return new ArrayList<>(Arrays.asList(firstRandom, secondRandom, thirdRandom));
-    }
-
     public int getRandom(int upperLimit){
         return (int) (Math.random() * upperLimit);
     }
@@ -74,12 +65,8 @@ public class Twenty48 {
     }
 
     public void updateBoard() {
-        List<Integer> boardNumbers = getNewCellNumbers();
         List<List<Integer>> places = getNewCellPositions();
-        places.forEach(coordinates -> {
-            this.board.get(coordinates.get(0)).set(coordinates.get(1), boardNumbers.get(0));
-            boardNumbers.remove(0);
-        });
+        places.forEach(coordinates -> this.board.get(coordinates.get(0)).set(coordinates.get(1), 2));
     }
 
     private void transpose() {

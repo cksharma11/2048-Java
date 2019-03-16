@@ -30,10 +30,7 @@ class Twenty48Test {
     @Test
     void printBoard() {
     }
-
-    @Test
-    void getNewCellNumbers() {
-    }
+    
 
     @Test
     void getRandom() {
