@@ -30,7 +30,7 @@ class Twenty48Test {
     @Test
     void printBoard() {
     }
-    
+
 
     @Test
     void getRandom() {

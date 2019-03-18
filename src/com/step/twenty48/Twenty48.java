@@ -23,17 +23,18 @@ public class Twenty48 {
     }
 
     private static void updateCellNumberAndPosition(List<Integer> row) {
-        for (int rowIndex = 0; rowIndex < row.size() - 1; rowIndex++)
-            for (int colIndex = rowIndex + 1; colIndex < row.size(); colIndex++) {
-                if (row.get(rowIndex).equals(0)) {
-                    row.set(rowIndex, row.get(colIndex));
-                    row.set(colIndex, 0);
-                }
-                if (row.get(rowIndex).equals(row.get(colIndex))) {
-                    row.set(rowIndex, row.get(rowIndex) * 2);
-                    row.set(colIndex, 0);
+        for (int rowIndex = 0; rowIndex < row.size() - 1; rowIndex++) {
+            for (int colIndex = 0; colIndex < row.size()-1; colIndex++) {
+                if (row.get(colIndex).equals(0)) {
+                    row.set(colIndex, row.get(colIndex+1));
+                    row.set(colIndex+1, 0);
                 }
             }
+            if (row.get(rowIndex).equals(row.get(rowIndex + 1))) {
+                row.set(rowIndex, row.get(rowIndex) * 2);
+                row.set(rowIndex + 1, 0);
+            }
+        }
     }
 
     public void printBoard() {
@@ -43,30 +44,24 @@ public class Twenty48 {
         });
     }
 
-    public int getRandom(int upperLimit){
+    public int getRandom(int upperLimit) {
         return (int) (Math.random() * upperLimit);
     }
 
-    public List<List<Integer>> getNewCellPositions() {
-        List<List<Integer>> positions = new ArrayList<>();
-        int row = getRandom(boardSize);
-        int column = getRandom(boardSize);
-        int numberOfNewCells = 3;
-
-        while (positions.size() != numberOfNewCells) {
+    public List<Integer> getNewCellPosition() {
+        List<Integer> position = new ArrayList<>();
+        do {
+            int row = getRandom(boardSize);
+            int column = getRandom(boardSize);
             boolean isCellEmpty = this.board.get(row).get(column).equals(0);
-            if (isCellEmpty) {
-                positions.add(Arrays.asList(row, column));
-            }
-            row = getRandom(boardSize);
-            column = getRandom(boardSize);
-        }
-        return positions;
+            if (isCellEmpty) position.addAll(Arrays.asList(row, column));
+        } while (position.size() != 2);
+        return position;
     }
 
     public void updateBoard() {
-        List<List<Integer>> places = getNewCellPositions();
-        places.forEach(coordinates -> this.board.get(coordinates.get(0)).set(coordinates.get(1), 2));
+        List<Integer> cellPosition = getNewCellPosition();
+        this.board.get(cellPosition.get(0)).set(cellPosition.get(1), 2);
     }
 
     private void transpose() {
@@ -103,5 +98,9 @@ public class Twenty48 {
         this.transpose();
         this.moveRight();
         this.transpose();
+    }
+
+    public boolean hasWon() {
+        return this.board.stream().anyMatch(row -> row.stream().anyMatch(element -> element == 2048));
     }
 }
